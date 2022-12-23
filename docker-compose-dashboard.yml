@@ -1,0 +1,36 @@
+version: '3.8'
+services:
+  server:
+    image: meetrix/webrtc-monitor-backend:1.0
+    container_name: webrtc-monitor-backend
+    ports:
+      - 9100:9100
+    restart: always
+    environment:
+      NODE_ENV: ${NODE_ENV}
+      SESSION_SECRET: ${SESSION_SECRET}
+      MONGO_DATABASE: ${MONGO_DATABASE}
+      MONGO_USERNAME: ${MONGO_USERNAME}
+      MONGO_PASSWORD: ${MONGO_PASSWORD}
+      MONGO_HOST: ${MONGO_HOST}
+      MONGO_PORT: ${MONGO_PORT}
+      CORS_REGEX: ${CORS_REGEX}
+      SMTP_HOST: ${SMTP_HOST}
+      SMTP_USER: ${SMTP_USER}
+      SMTP_PASSWORD: ${SMTP_PASSWORD}
+      RECEIVER_EMAIL: ${RECEIVER_EMAIL}
+      SENDER_EMAIL: ${SENDER_EMAIL}
+      AUTH_LANDING: ${AUTH_LANDING}
+      API_BASE_URL: ${API_BASE_URL}
+      SUPPORT_URL: ${SUPPORT_URL}
+    command: [ 'npm', 'start' ]
+
+  webrtcmonitor-dashboard:
+    image: meetrix/webrtc-monitor-frontend:1.0
+    container_name: webrtc-monitor-frontend
+    ports:
+      - 3100:80
+    environment:
+      - PUBLIC_URL=/
+      - REACT_APP_API_BASE_URL=${API_BASE_URL_WITHOUT_SUFFIX}
+      - REACT_APP_SOCKET_BASE_URL=${API_BASE_URL_WITHOUT_SUFFIX}
