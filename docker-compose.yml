@@ -24,14 +24,28 @@ services:
       API_BASE_URL: ${API_BASE_URL}
       SUPPORT_URL: ${SUPPORT_URL}
     command: [ 'npm', 'start' ]
+    depends_on:
+      - mongo
 
   webrtcmonitor-dashboard:
     image: meetrix/webrtc-monitor-frontend:1.0
     container_name: webrtc-monitor-frontend
     ports:
-      - 3100:80
+      - 3000:80
     restart: on-failure
     environment:
       - PUBLIC_URL=/
       - REACT_APP_API_BASE_URL=${API_BASE_URL_WITHOUT_SUFFIX}
       - REACT_APP_SOCKET_BASE_URL=${API_BASE_URL_WITHOUT_SUFFIX}
+
+  mongo:
+    image: mongo:4.0
+    container_name: webrtc-monitor-mongodb
+    restart: on-failure
+    volumes:
+      - mongodata:/data/db
+    ports:
+      - 27025:27017
+
+volumes:
+  mongodata:
