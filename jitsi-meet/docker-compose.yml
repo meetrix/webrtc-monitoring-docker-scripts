@@ -3,7 +3,7 @@ version: '3.5'
 services:
     # Frontend
     web:
-        image: meetrix/webrtc-monitor-jitsi-meet-web:1.0
+        image: meetrix/webrtc-monitor-jitsi-meet-web:1.1
         restart: ${RESTART_POLICY:-unless-stopped}
         ports:
             - '${HTTP_PORT}:80'
@@ -13,7 +13,7 @@ services:
             - ${CONFIG}/web/crontabs:/var/spool/cron/crontabs:Z
             - ${CONFIG}/transcripts:/usr/share/jitsi-meet/transcripts:Z
             #- /usr/share/jitsi-meet:/usr/share/jitsi-meet
-            #- /c/Users/ddilu/OneDrive/Desktop/jitsi-meet:/usr/share/jitsi-meet
+            #- /c/Users/ddilu/Desktop/jitsi-meet:/usr/share/jitsi-meet
         environment:
             - AMPLITUDE_ID
             - ANALYTICS_SCRIPT_URLS
